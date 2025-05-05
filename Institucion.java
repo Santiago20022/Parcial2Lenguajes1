@@ -2,7 +2,6 @@ import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-
 public class Institucion {
     private static LinkedList<Egresado> egresados = new LinkedList<>();
     private static HashSet<Empleado> empleados = new HashSet<>();
@@ -23,16 +22,16 @@ public class Institucion {
 
             switch (opcion) {
                 case 1:
-                agregarEgresado();
+                    agregarEgresado();
                     break;
                 case 2:
                     agregarEmpleado();
-                    break;   
-                    
+                    break;
+
                 case 3:
                     listarEgresados();
-                    break;  
-                
+                    break;
+
                 case 4:
                     listarEmpleados();
                     break;
@@ -51,14 +50,23 @@ public class Institucion {
 
     private static void agregarEgresado() {
         try {
-            System.out.print("Nombre: ");
-            String nombre = scanner.nextLine();
-            System.out.print("Edad: ");
-            int edad = Integer.parseInt(scanner.nextLine());
+            String nombre;
+            do {
+                System.out.print("Nombre: ");
+                nombre = scanner.nextLine();
+            } while (!Validar.validarNombre(nombre));
+
+            int edad;
+            do {
+                System.out.print("Edad: ");
+                edad = Integer.parseInt(scanner.nextLine());
+            } while (!Validar.validarEdad(String.valueOf(edad)));
+
+            LocalDate fecha1, fecha2;
             System.out.print("Fecha de matrícula (yyyy-MM-dd): ");
-            LocalDate fecha1 = LocalDate.parse(scanner.nextLine(), formatter);
+            fecha1 = LocalDate.parse(scanner.nextLine());
             System.out.print("Fecha de terminación (yyyy-MM-dd): ");
-            LocalDate fecha2 = LocalDate.parse(scanner.nextLine(), formatter);
+            fecha2 = LocalDate.parse(scanner.nextLine());
 
             egresados.add(new Egresado(nombre, edad, fecha1, fecha2));
             System.out.println("Egresado agregado correctamente.");
@@ -69,19 +77,33 @@ public class Institucion {
 
     private static void agregarEmpleado() {
         try {
-            System.out.print("Nombre: ");
-            String nombre = scanner.nextLine();
-            System.out.print("Cargo: ");
-            String cargo = scanner.nextLine();
-            System.out.print("Dependencia: ");
-            String dependencia = scanner.nextLine();
+            String nombre;
+            do {
+                System.out.print("Nombre: ");
+                nombre = scanner.nextLine();
+            } while (!Validar.validarNombre(nombre));
+
+            String cargo;
+            do {
+                System.out.print("Cargo: ");
+                cargo = scanner.nextLine();
+            } while (cargo == null || cargo.trim().isEmpty());
+
+            String dependencia;
+            do {
+                System.out.print("Dependencia: ");
+                dependencia = scanner.nextLine();
+            } while (dependencia == null || dependencia.trim().isEmpty());
+
+            LocalDate fecha1, fecha2;
             System.out.print("Fecha de inicio laboral (yyyy-MM-dd): ");
-            LocalDate fecha1 = LocalDate.parse(scanner.nextLine(), formatter);
+            fecha1 = LocalDate.parse(scanner.nextLine());
             System.out.print("Fecha actual (yyyy-MM-dd): ");
-            LocalDate fecha2 = LocalDate.parse(scanner.nextLine(), formatter);
+            fecha2 = LocalDate.parse(scanner.nextLine());
 
             empleados.add(new Empleado(nombre, cargo, dependencia, fecha1, fecha2));
             System.out.println("Empleado agregado correctamente.");
+            
         } catch (Exception e) {
             System.out.println("Error al agregar empleado: " + e.getMessage());
         }
