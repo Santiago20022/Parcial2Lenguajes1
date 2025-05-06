@@ -1,3 +1,4 @@
+// Parcial2Lenguajes1/Empleado.java
 import java.time.*;
 
 class Empleado extends Persona {
@@ -10,12 +11,10 @@ class Empleado extends Persona {
         super(nombre);
         if (cargo == null || cargo.trim().isEmpty()) throw new IllegalArgumentException("Cargo inválido.");
         if (dependencia == null || dependencia.trim().isEmpty()) throw new IllegalArgumentException("Dependencia inválida.");
-        if (fechaInicio.compareTo(fechaActual) > 0)
-            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha actual.");
         if (fechaInicio.isAfter(fechaActual))
             throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha actual.");
 
-        this.cargo = cargo.trim(); //el trim para elimar los espacion en blanco
+        this.cargo = cargo.trim();
         this.dependencia = dependencia.trim();
         this.fechaInicio = fechaInicio;
         this.fechaActual = fechaActual;

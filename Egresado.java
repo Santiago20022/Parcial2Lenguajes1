@@ -1,3 +1,4 @@
+// Parcial2Lenguajes1/Egresado.java
 import java.time.*;
 
 class Egresado extends Persona {

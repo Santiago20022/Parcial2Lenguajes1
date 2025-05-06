@@ -1,3 +1,4 @@
+// Parcial2Lenguajes1/Institucion.java
 import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -27,21 +28,17 @@ public class Institucion {
                 case 2:
                     agregarEmpleado();
                     break;
-
                 case 3:
                     listarEgresados();
                     break;
-
                 case 4:
                     listarEmpleados();
                     break;
-
                 case 5:
                     System.out.println("Saliendo...");
                     break;
-
                 default:
-                    System.out.println("Opción inválida.");
+                    System.out.println("Opción inválida. Intente de nuevo.");
                     break;
             }
 
@@ -54,19 +51,30 @@ public class Institucion {
             do {
                 System.out.print("Nombre: ");
                 nombre = scanner.nextLine();
-            } while (!Validar.validarNombre(nombre));
+                if (nombre.trim().isEmpty()) {
+                    System.out.println("El nombre no puede estar vacío. Inténtalo de nuevo.");
+                }
+            } while (nombre.trim().isEmpty());
 
-            int edad;
-            do {
-                System.out.print("Edad: ");
-                edad = Integer.parseInt(scanner.nextLine());
-            } while (!Validar.validarEdad(String.valueOf(edad)));
+            int edad = -1;
+            while (edad < 1 || edad > 99) {
+                System.out.print("Edad (1-99): ");
+                String edadInput = scanner.nextLine();
+                try {
+                    edad = Integer.parseInt(edadInput);
+                    if (edad < 1 || edad > 99) {
+                        System.out.println("Edad inválida. Debe ser un número entre 1 y 99.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                }
+            }
 
             LocalDate fecha1, fecha2;
             System.out.print("Fecha de matrícula (yyyy-MM-dd): ");
-            fecha1 = LocalDate.parse(scanner.nextLine());
+            fecha1 = LocalDate.parse(scanner.nextLine(), formatter);
             System.out.print("Fecha de terminación (yyyy-MM-dd): ");
-            fecha2 = LocalDate.parse(scanner.nextLine());
+            fecha2 = LocalDate.parse(scanner.nextLine(), formatter);
 
             egresados.add(new Egresado(nombre, edad, fecha1, fecha2));
             System.out.println("Egresado agregado correctamente.");
@@ -81,29 +89,37 @@ public class Institucion {
             do {
                 System.out.print("Nombre: ");
                 nombre = scanner.nextLine();
-            } while (!Validar.validarNombre(nombre));
+                if (nombre.trim().isEmpty()) {
+                    System.out.println("El nombre no puede estar vacío. Inténtalo de nuevo.");
+                }
+            } while (nombre.trim().isEmpty());
 
             String cargo;
             do {
                 System.out.print("Cargo: ");
                 cargo = scanner.nextLine();
-            } while (cargo == null || cargo.trim().isEmpty());
+                if (cargo.trim().isEmpty()) {
+                    System.out.println("El cargo no puede estar vacío. Inténtalo de nuevo.");
+                }
+            } while (cargo.trim().isEmpty());
 
             String dependencia;
             do {
                 System.out.print("Dependencia: ");
                 dependencia = scanner.nextLine();
-            } while (dependencia == null || dependencia.trim().isEmpty());
+                if (dependencia.trim().isEmpty()) {
+                    System.out.println("La dependencia no puede estar vacía. Inténtalo de nuevo.");
+                }
+            } while (dependencia.trim().isEmpty());
 
             LocalDate fecha1, fecha2;
             System.out.print("Fecha de inicio laboral (yyyy-MM-dd): ");
-            fecha1 = LocalDate.parse(scanner.nextLine());
+            fecha1 = LocalDate.parse(scanner.nextLine(), formatter);
             System.out.print("Fecha actual (yyyy-MM-dd): ");
-            fecha2 = LocalDate.parse(scanner.nextLine());
+            fecha2 = LocalDate.parse(scanner.nextLine(), formatter);
 
             empleados.add(new Empleado(nombre, cargo, dependencia, fecha1, fecha2));
             System.out.println("Empleado agregado correctamente.");
-            
         } catch (Exception e) {
             System.out.println("Error al agregar empleado: " + e.getMessage());
         }
